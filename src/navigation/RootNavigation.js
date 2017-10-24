@@ -9,6 +9,8 @@ import Deck from '../screens/Deck';
 import DeckNew from '../screens/DeckNew';
 import Home from '../screens/Home';
 import Quiz from '../screens/Quiz';
+// utils
+import { setLocalNotification } from '../utils/helpers';
 
 const routeConfigMap = {
   Home: {
@@ -44,6 +46,14 @@ const stackConfig = {
     backgroundColor: Colors.black,
   },
 };
-const RootNavigation = StackNavigator(routeConfigMap, stackConfig);
+const RootNavigator = StackNavigator(routeConfigMap, stackConfig);
 
-export default RootNavigation;
+export default class RootNavigation extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return <RootNavigator />;
+  }
+}

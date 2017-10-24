@@ -3,6 +3,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 // constants
 import Colors from '../constants/Colors';
+// utils
+import { clearLocalNotification } from '../utils/helpers';
 
 const styles = StyleSheet.create({
   container: {
@@ -132,6 +134,7 @@ export default class Quiz extends React.Component {
 
       let quizCompleted = false;
       if (currentQuestionIndex === deck.questions.length) {
+        clearLocalNotification();
         quizCompleted = true;
       }
 
