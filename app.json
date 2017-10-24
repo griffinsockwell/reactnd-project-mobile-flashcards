@@ -1,5 +1,9 @@
 {
   "expo": {
-    "sdkVersion": "21.0.0"
+    "name": "Flashcards",
+    "sdkVersion": "21.0.0",
+    "slug": "mobile-flashcards",
+    "orientation": "portrait",
+    "primaryColor": "#1C1E20"
   }
 }
