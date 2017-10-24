@@ -9,13 +9,10 @@ import Loading from '../common/Loading';
 // components
 import DeckList from '../components/DeckList';
 import DeckListSeed from '../components/DeckListSeed';
-// constants
-import Colors from '../constants/Colors';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.black,
   },
   newDeck: {
     color: '#fff',

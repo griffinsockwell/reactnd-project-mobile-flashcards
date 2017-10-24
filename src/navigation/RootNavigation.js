@@ -40,6 +40,9 @@ const stackConfig = {
     headerBackTitle: null,
     headerTintColor: '#fff',
   },
+  cardStyle: {
+    backgroundColor: Colors.black,
+  },
 };
 const RootNavigation = StackNavigator(routeConfigMap, stackConfig);
 
