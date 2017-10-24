@@ -1,13 +1,12 @@
 // node_modules
 import React from 'react';
-import { View, StyleSheet, ActivityIndicator } from 'react-native';
 import { connect } from 'react-redux';
 // actions
 import { decksSeed } from '../actions';
-// constants
-import Colors from '../constants/Colors';
+// common
+import Loading from '../common/Loading';
 
-export const decks = {
+const decks = {
   React: {
     title: 'React',
     questions: [
@@ -33,26 +32,13 @@ export const decks = {
   },
 };
 
-const styles = StyleSheet.create({
-  loading: {
-    flex: 1,
-    backgroundColor: Colors.black,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 class DeckListSeed extends React.Component {
   componentDidMount() {
     this.props.decksSeed(decks);
   }
 
   render() {
-    return (
-      <View style={styles.loading}>
-        <ActivityIndicator color={Colors.green} />
-      </View>
-    );
+    return <Loading />;
   }
 }
 
