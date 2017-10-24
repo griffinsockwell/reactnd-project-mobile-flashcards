@@ -46,6 +46,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 12,
   },
+  addCards: {
+    color: '#fff',
+  },
 });
 
 class Deck extends React.Component {
@@ -78,7 +81,8 @@ class Deck extends React.Component {
   }
 
   navigateQuiz = () => {
-    this.props.navigation.navigate('Quiz');
+    const { deck } = this.props;
+    this.props.navigation.navigate('Quiz', { deck });
   };
 
   render() {
@@ -97,11 +101,16 @@ class Deck extends React.Component {
               {cards} card{cards === 1 ? '' : 's'}
             </Text>
           </View>
+
           <View style={styles.section}>
-            <TouchableOpacity style={styles.button} onPress={this.navigateQuiz}>
-              <Text style={styles.buttonText}>START</Text>
-              <Text style={styles.buttonText}>QUIZ</Text>
-            </TouchableOpacity>
+            {cards ? (
+              <TouchableOpacity style={styles.button} onPress={this.navigateQuiz}>
+                <Text style={styles.buttonText}>START</Text>
+                <Text style={styles.buttonText}>QUIZ</Text>
+              </TouchableOpacity>
+            ) : (
+              <Text style={styles.addCards}>Add cards to begin studying!</Text>
+            )}
           </View>
         </View>
       );
