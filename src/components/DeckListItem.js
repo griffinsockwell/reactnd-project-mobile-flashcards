@@ -46,7 +46,9 @@ export default class DeckListItem extends React.Component {
       <TouchableOpacity style={styles.item} onPress={this.navigateDeck}>
         <View style={styles.container}>
           <View style={[styles.deckColor, { backgroundColor }]} />
-          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.title} numberOfLines={1}>
+            {item.title}
+          </Text>
           <Text style={styles.cardCount}>
             {cards} card{cards === 1 ? '' : 's'}
           </Text>

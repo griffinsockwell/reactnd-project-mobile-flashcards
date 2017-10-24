@@ -1,6 +1,6 @@
 // node_modules
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { connect } from 'react-redux';
 // actions
 import { decksGet, decksReset } from '../actions';
@@ -11,9 +11,6 @@ import DeckList from '../components/DeckList';
 import DeckListSeed from '../components/DeckListSeed';
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
   newDeck: {
     color: '#fff',
     fontWeight: '700',
@@ -52,11 +49,7 @@ class Home extends React.Component {
     } else if (!data.length) {
       component = <DeckListSeed />;
     } else {
-      component = (
-        <View style={styles.container}>
-          <DeckList data={data} navigation={this.props.navigation} />
-        </View>
-      );
+      component = <DeckList data={data} navigation={this.props.navigation} />;
     }
 
     return component;
