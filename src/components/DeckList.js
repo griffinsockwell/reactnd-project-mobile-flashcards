@@ -5,8 +5,6 @@ import { FlatList, StyleSheet } from 'react-native';
 import DeckListItem from './DeckListItem';
 // constants
 import Colors from '../constants/Colors';
-// utils
-import decks from '../utils/decks';
 
 const styles = StyleSheet.create({
   list: {
@@ -20,13 +18,12 @@ export default class DeckList extends React.Component {
   renderItem = ({ item }) => <DeckListItem item={item} navigation={this.props.navigation} />;
 
   render() {
-    const data = [];
-    Object.entries(decks).forEach(([key, value]) => {
-      data.push({ key, ...value });
-    });
-
     return (
-      <FlatList data={data} renderItem={this.renderItem} contentContainerStyle={styles.list} />
+      <FlatList
+        data={this.props.data}
+        renderItem={this.renderItem}
+        contentContainerStyle={styles.list}
+      />
     );
   }
 }

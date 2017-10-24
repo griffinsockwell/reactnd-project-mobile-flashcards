@@ -1,10 +1,13 @@
 // node_modules
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+// actions
+import { deckGet, deckReset } from '../actions';
+// common
+import Loading from '../common/Loading';
 // constants
 import Colors from '../constants/Colors';
-// utils
-import decks from '../utils/decks';
 
 const styles = StyleSheet.create({
   container: {
@@ -46,9 +49,9 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class Deck extends React.Component {
+class Deck extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
-    title: decks[navigation.state.params.key].title.toUpperCase(),
+    title: navigation.state.params.title.toUpperCase(),
     headerTitleStyle: {
       color: Colors.getColor(navigation.state.params.key),
       fontWeight: '700',
@@ -61,31 +64,52 @@ export default class Deck extends React.Component {
     ),
   });
 
-  navigateQuiz = () => {
+  componentDidMount() {
     const { key } = this.props.navigation.state.params;
-    this.props.navigation.navigate('Quiz', { key });
+    this.props.deckGet(key);
+  }
+
+  componentWillUnmount() {
+    this.props.deckReset();
+  }
+
+  navigateQuiz = () => {
+    this.props.navigation.navigate('Quiz');
   };
 
   render() {
-    const { key } = this.props.navigation.state.params;
-    const deck = decks[key];
-    const cards = deck.questions.length;
+    const { loading, deck } = this.props;
 
-    return (
-      <View style={styles.container}>
-        <View style={styles.section}>
-          <Text style={styles.title}>{deck.title}</Text>
-          <Text style={styles.cardCount}>
-            {cards} card{cards === 1 ? '' : 's'}
-          </Text>
+    let component;
+    if (loading) {
+      component = <Loading />;
+    } else {
+      const cards = deck.questions.length;
+      component = (
+        <View style={styles.container}>
+          <View style={styles.section}>
+            <Text style={styles.title}>{deck.title}</Text>
+            <Text style={styles.cardCount}>
+              {cards} card{cards === 1 ? '' : 's'}
+            </Text>
+          </View>
+          <View style={styles.section}>
+            <TouchableOpacity style={styles.button} onPress={this.navigateQuiz}>
+              <Text style={styles.buttonText}>START</Text>
+              <Text style={styles.buttonText}>QUIZ</Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <View style={styles.section}>
-          <TouchableOpacity style={styles.button} onPress={this.navigateQuiz}>
-            <Text style={styles.buttonText}>START</Text>
-            <Text style={styles.buttonText}>QUIZ</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-    );
+      );
+    }
+
+    return component;
   }
 }
+
+const mapStateToProps = state => ({
+  loading: state.deck.loading,
+  deck: state.deck.deck,
+});
+
+export default connect(mapStateToProps, { deckGet, deckReset })(Deck);

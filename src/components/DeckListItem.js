@@ -33,8 +33,8 @@ const styles = StyleSheet.create({
 
 export default class DeckListItem extends React.Component {
   navigateDeck = () => {
-    const { key } = this.props.item;
-    this.props.navigation.navigate('Deck', { key });
+    const { key, title } = this.props.item;
+    this.props.navigation.navigate('Deck', { key, title });
   };
 
   render() {
