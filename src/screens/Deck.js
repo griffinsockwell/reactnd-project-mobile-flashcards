@@ -49,19 +49,24 @@ const styles = StyleSheet.create({
 });
 
 class Deck extends React.Component {
-  static navigationOptions = ({ navigation, screenProps }) => ({
-    title: navigation.state.params.title.toUpperCase(),
-    headerTitleStyle: {
-      color: Colors.getColor(navigation.state.params.key),
-      fontWeight: '700',
-      fontSize: 14,
-    },
-    headerRight: (
-      <TouchableOpacity style={{ marginRight: 10 }} onPress={() => navigation.navigate('CardNew')}>
-        <Text style={styles.newCard}>New card</Text>
-      </TouchableOpacity>
-    ),
-  });
+  static navigationOptions = ({ navigation, screenProps }) => {
+    const { title, key } = navigation.state.params;
+    return {
+      title: title.toUpperCase(),
+      headerTitleStyle: {
+        color: Colors.getColor(key),
+        fontWeight: '700',
+        fontSize: 14,
+      },
+      headerRight: (
+        <TouchableOpacity
+          style={{ marginRight: 10 }}
+          onPress={() => navigation.navigate('CardNew', { key })}>
+          <Text style={styles.newCard}>New card</Text>
+        </TouchableOpacity>
+      ),
+    };
+  };
 
   componentDidMount() {
     const { key } = this.props.navigation.state.params;

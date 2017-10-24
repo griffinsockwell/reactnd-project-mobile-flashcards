@@ -11,6 +11,10 @@ export default (state = initialState, action) => {
       return { ...state, loading: false, deck: action.payload };
     case types.DECK_RESET:
       return initialState;
+    case types.DECK_CARD_ADD: {
+      const deck = { ...state.deck, questions: action.payload.value };
+      return { ...state, deck };
+    }
     default:
       return state;
   }

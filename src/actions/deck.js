@@ -13,3 +13,12 @@ export const deckGet = key => async dispatch => {
 };
 
 export const deckReset = () => ({ type: types.DECK_RESET });
+
+export const deckAddCard = (key, value) => async dispatch => {
+  try {
+    await DecksAPI.addCard(key, value);
+    dispatch({ type: types.DECK_CARD_ADD, payload: { key, value } });
+  } catch (error) {
+    console.log(error);
+  }
+};

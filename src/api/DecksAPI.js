@@ -8,3 +8,6 @@ export const seedDecks = decks => AsyncStorage.setItem(STORAGE_KEY, JSON.stringi
 
 export const addDeck = (key, value) =>
   AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [key]: value }));
+
+export const addCard = (key, value) =>
+  AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({ [key]: { questions: value } }));
