@@ -1,33 +1,17 @@
 // node_modules
 import React from 'react';
-import { View, Text, TextInput, Button, ActivityIndicator, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 // api
 import * as DecksAPI from '../api/DecksAPI';
-// constants
-import Colors from '../constants/Colors';
+// common
+import FormInput from '../common/FormInput';
+import FormSubmit from '../common/FormSubmit';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-  },
-  sectionInput: {
-    paddingVertical: 10,
-  },
-  label: {
-    color: '#fff',
-    fontWeight: '700',
-  },
-  input: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    height: 40,
-    paddingLeft: 10,
-    color: '#fff',
-  },
-  sectionSubmit: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
   },
 });
 
@@ -71,26 +55,21 @@ export default class DeckNew extends React.Component {
     const { submitting, title } = this.state;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.sectionInput}>
-          <Text style={styles.label}>Title</Text>
-          <TextInput
-            style={styles.input}
-            value={title}
-            onChangeText={this.handleChangeTitle}
-            autoCapitalize="words"
-            autoFocus
-          />
-        </View>
-        <View style={styles.sectionSubmit}>
-          <Button
-            title={submitting ? 'Adding deck...' : 'Add deck'}
-            onPress={this.handleSubmit}
-            color={Colors.green}
-          />
-          <ActivityIndicator animating={submitting} color={Colors.green} />
-        </View>
-      </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <FormInput
+          label="Title"
+          value={title}
+          onChangeText={this.handleChangeTitle}
+          autoCapitalize="words"
+          autoFocus
+        />
+        <FormSubmit
+          submitting={submitting}
+          title="Add deck"
+          titleSubmitting="Adding deck..."
+          onPress={this.handleSubmit}
+        />
+      </KeyboardAvoidingView>
     );
   }
 }

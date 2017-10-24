@@ -1,33 +1,17 @@
 // node_modules
 import React from 'react';
-import { View, Text, TextInput, Button, ActivityIndicator, StyleSheet } from 'react-native';
+import { KeyboardAvoidingView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 // actions
 import { deckAddCard } from '../actions';
-// constants
-import Colors from '../constants/Colors';
+// common
+import FormInput from '../common/FormInput';
+import FormSubmit from '../common/FormSubmit';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 10,
-  },
-  sectionInput: {
-    paddingVertical: 10,
-  },
-  label: {
-    color: '#fff',
-    fontWeight: '700',
-  },
-  input: {
-    backgroundColor: 'rgba(255,255,255,0.1)',
-    height: 40,
-    paddingLeft: 10,
-    color: '#fff',
-  },
-  sectionSubmit: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
   },
 });
 
@@ -71,35 +55,27 @@ class CardNew extends React.Component {
     const { submitting, question, answer } = this.state;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.sectionInput}>
-          <Text style={styles.label}>Question</Text>
-          <TextInput
-            style={styles.input}
-            value={question}
-            onChangeText={this.handleChangeQuestion}
-            autoCapitalize="sentences"
-            autoFocus
-          />
-        </View>
-        <View style={styles.sectionInput}>
-          <Text style={styles.label}>Answer</Text>
-          <TextInput
-            style={styles.input}
-            value={answer}
-            onChangeText={this.handleChangeAnswer}
-            autoCapitalize="sentences"
-          />
-        </View>
-        <View style={styles.sectionSubmit}>
-          <Button
-            title={submitting ? 'Adding card...' : 'Add card'}
-            onPress={this.handleSubmit}
-            color={Colors.green}
-          />
-          <ActivityIndicator animating={submitting} color={Colors.green} />
-        </View>
-      </View>
+      <KeyboardAvoidingView behavior="padding" style={styles.container}>
+        <FormInput
+          label="Question"
+          value={question}
+          onChangeText={this.handleChangeQuestion}
+          autoCapitalize="sentences"
+          autoFocus
+        />
+        <FormInput
+          label="Answer"
+          value={answer}
+          onChangeText={this.handleChangeAnswer}
+          autoCapitalize="sentences"
+        />
+        <FormSubmit
+          submitting={submitting}
+          title="Add card"
+          titleSubmitting="Adding card..."
+          onPress={this.handleSubmit}
+        />
+      </KeyboardAvoidingView>
     );
   }
 }
