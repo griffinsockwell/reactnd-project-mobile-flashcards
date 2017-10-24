@@ -1,6 +1,6 @@
 // node_modules
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, Button, StyleSheet } from 'react-native';
 // constants
 import Colors from '../constants/Colors';
 // utils
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
   finishedContainer: {
-    flex: 1,
+    flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -98,18 +98,20 @@ const styles = StyleSheet.create({
   },
 });
 
+const initialState = {
+  quizCompleted: false,
+  showAnswer: false,
+  currentQuestionIndex: 0,
+  countIncorrect: 0,
+  countCorrect: 0,
+};
+
 export default class Quiz extends React.Component {
   static navigationOptions = {
     title: 'QUIZ',
   };
 
-  state = {
-    quizCompleted: false,
-    showAnswer: false,
-    currentQuestionIndex: 0,
-    countIncorrect: 0,
-    countCorrect: 0,
-  };
+  state = initialState;
 
   handleCorrectAnswer = () => {
     this.updateQuiz(true);
@@ -153,6 +155,10 @@ export default class Quiz extends React.Component {
     this.setState(state => ({ showAnswer: !state.showAnswer }));
   };
 
+  handleRestartQuiz = () => {
+    this.setState(initialState);
+  };
+
   render() {
     const { quizCompleted, currentQuestionIndex, showAnswer } = this.state;
     const { deck } = this.props.navigation.state.params;
@@ -174,6 +180,10 @@ export default class Quiz extends React.Component {
               <Text style={styles.finishedIncorrectCount}>{this.state.countIncorrect}</Text>
               <Text style={styles.finishedIncorrectText}>INCORRECT</Text>
             </View>
+          </View>
+
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <Button title="Restart quiz" onPress={this.handleRestartQuiz} color={Colors.green} />
           </View>
         </View>
       );
